@@ -40,7 +40,6 @@ class GoalsController extends Controller
                 'name' => $request->input('name'),
                 'dateline' => $request->input('dateline'),
                 'price' => $request->input('price'),
-                'current_value' => $request->input('current_value'),
             ]);
 
             return response()->json([

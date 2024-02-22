@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
             $table->integer('goal_id');
-            $table->foreign('goal_id')->references('id')->on('goals')->cascadeOnDelete();
+            // $table->foreign('goal_id')->references('id')->on('goals')->cascadeOnDelete();
             $table->string('name');
             $table->integer('value');
             $table->timestamps();
