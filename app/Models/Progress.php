@@ -18,7 +18,6 @@ class Progress extends Model
     ];
 
     public function goals() {
-        // return $this->belongsTo();
         return $this->belongsTo(Goals::class,'goal_id','id');
     }
 

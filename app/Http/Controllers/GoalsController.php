@@ -62,7 +62,6 @@ class GoalsController extends Controller
                 'price' => 'required|numeric',
             ]);
 
-
             if ($validator->fails()) {
                 return response()->json($validator->errors());
             }

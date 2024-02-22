@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoalsController;
+use App\Http\Controllers\ProgressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::controller(AuthController::class)->group(function() {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('goals', GoalsController::class);
+    Route::resource('progress', ProgressController::class);
     Route::post('logout', [AuthController::class,'logout']);
 });
 
