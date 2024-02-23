@@ -12,9 +12,19 @@ class GoalsController extends Controller
     public function index(Request $request)
     {
         try{
-            $goals = Goals::with('progress')->get();
-    
-            return response()->json(['succes' => true, 'data' => $goals, 'message' => "Berhasil Mendapatkan Data Goals"]);
+            if ($request->id) 
+                $goals = Goals::with('progress')->where('id', $request->id)->get();
+            else if ($request->keyword)
+                $goals = Goals::with('progress')->where('name','like', '%'.$request->keyword.'%')->get();
+            else
+                $goals = Goals::with('progress')->get();
+
+            foreach ($goals as $goal) {
+                $totalPercentage = ($goal->current_value / $goal->price) * 100;
+                $goal["total_percentage"] = number_format($totalPercentage, 2);
+            }
+            
+            return response()->json(['success' => true, 'data' => $goals, 'message' => "Berhasil Mendapatkan Data Goals"]);
         }
         catch (Exception $e){
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
