@@ -104,6 +104,12 @@ class ProgressController extends Controller
         try{
             $progress = Progress::find($id);
 
+            $oldValue = $progress->value;
+
+            $goals = Goals::find($progress->goal_id);
+            $goals->current_value -= $oldValue;
+            $goals->save();
+
             $progress->delete();
 
             return response()->json([
