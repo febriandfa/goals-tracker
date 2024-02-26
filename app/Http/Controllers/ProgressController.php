@@ -19,6 +19,8 @@ class ProgressController extends Controller
 
             if ($request->id) {
                 $progress = Progress::with(['goals', 'goals.users'])->where('id', $request->id)->get();
+            } else if ($request->goal_id) {
+                $progress = Progress::with(['goals', 'goals.users'])->where('goal_id', $request->goal_id)->get();
             } else {
                 $progress = Progress::with(['goals', 'goals.users'])->get();
             }
