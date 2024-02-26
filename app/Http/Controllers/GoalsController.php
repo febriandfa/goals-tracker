@@ -23,7 +23,11 @@ class GoalsController extends Controller
 
             foreach ($goals as $goal) {
                 $totalPercentage = ($goal->current_value / $goal->price) * 100;
-                $goal["total_percentage"] = number_format($totalPercentage, 2);
+                if($totalPercentage > 100){
+                    $goal["total_percentage"] = number_format(100, 2);
+                }else{
+                    $goal["total_percentage"] = number_format($totalPercentage, 2);
+                }
             }
             
             return response()->json(['success' => true, 'data' => $goals, 'message' => "Berhasil Mendapatkan Data Goals"]);
