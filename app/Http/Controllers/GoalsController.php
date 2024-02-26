@@ -13,11 +13,11 @@ class GoalsController extends Controller
     {
         try{
             if ($request->id) 
-                $goals = Goals::with('progress')->where('id', $request->id)->get();
+                $goals = Goals::with(['progress','users'])->where('id', $request->id)->get();
             else if ($request->keyword)
-                $goals = Goals::with('progress')->where('name','like', '%'.$request->keyword.'%')->get();
+                $goals = Goals::with(['progress','users'])->where('name','like', '%'.$request->keyword.'%')->get();
             else
-                $goals = Goals::with('progress')->get();
+                $goals = Goals::with(['progress','users'])->get();
 
             foreach ($goals as $goal) {
                 $totalPercentage = ($goal->current_value / $goal->price) * 100;
