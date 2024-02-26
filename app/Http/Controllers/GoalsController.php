@@ -16,6 +16,8 @@ class GoalsController extends Controller
                 $goals = Goals::with(['progress','users'])->where('id', $request->id)->get();
             else if ($request->keyword)
                 $goals = Goals::with(['progress','users'])->where('name','like', '%'.$request->keyword.'%')->get();
+            else if ($request->user_id)
+                $goals = Goals::with(['progress','users'])->where('user_id', $request->user_id)->get();
             else
                 $goals = Goals::with(['progress','users'])->get();
 
