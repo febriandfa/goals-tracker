@@ -13,10 +13,15 @@ class ProgressController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try{
-            $progress = Progress::with(['goals', 'goals.users'])->get();
+
+            if ($request->id) {
+                $progress = Progress::with(['goals', 'goals.users'])->where('id', $request->id)->get();
+            } else {
+                $progress = Progress::with(['goals', 'goals.users'])->get();
+            }
     
             return response()->json(['succes' => true, 'data' => $progress, 'message' => "Berhasil Mendapatkan Data Progress"]);
         }
