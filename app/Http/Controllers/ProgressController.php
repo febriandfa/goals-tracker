@@ -48,13 +48,18 @@ class ProgressController extends Controller
                 return response()->json($validator->errors());
             }
 
+            $goals = Goals::find($request->input('goal_id'));
+
+            if (!$goals) {
+                return response()->json(['success' => false, 'message' => 'Goal Tidak Ditemukan']);
+            }
+
             $progress = Progress::create([
                 'goal_id' => $request->input('goal_id'),
                 'name' => $request->input('name'),
                 'value' => $request->input('value'),
             ]);
 
-            $goals = Goals::find($request->input('goal_id'));
             $goals->current_value += $request->input('value');
             $goals->save();
 
@@ -75,6 +80,8 @@ class ProgressController extends Controller
         try{
             $progress = Progress::find($id);
 
+            $goals = Goals::find($progress->goal_id);
+
             $validator = Validator::make($request->only(['name', 'value']),[
                 'name' => 'required|string|max:255',
                 'value' => 'required|numeric',
@@ -90,7 +97,6 @@ class ProgressController extends Controller
 
             $progress->update($progressUpdate);
 
-            $goals = Goals::find($progress->goal_id);
             $goals->current_value += ($request->input('value') - $oldValue);
             $goals->save();
 

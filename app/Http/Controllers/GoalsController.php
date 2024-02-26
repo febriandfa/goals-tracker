@@ -22,6 +22,11 @@ class GoalsController extends Controller
                 $goals = Goals::with(['progress','users'])->get();
 
             foreach ($goals as $goal) {
+                $shortage = $goal->price - $goal->current_value;
+                $goal["shortage"] = $shortage;
+            }
+
+            foreach ($goals as $goal) {
                 $totalPercentage = ($goal->current_value / $goal->price) * 100;
                 if($totalPercentage > 100){
                     $goal["total_percentage"] = number_format(100, 2);
