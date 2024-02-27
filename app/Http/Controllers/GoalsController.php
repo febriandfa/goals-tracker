@@ -23,7 +23,11 @@ class GoalsController extends Controller
 
             foreach ($goals as $goal) {
                 $shortage = $goal->price - $goal->current_value;
-                $goal["shortage"] = $shortage;
+                if ($shortage < 0) {
+                    $goal["shortage"] = 0;
+                } else {
+                    $goal["shortage"] = $shortage;
+                }
             }
 
             foreach ($goals as $goal) {
